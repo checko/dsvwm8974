@@ -10,22 +10,23 @@ int main()
 {
 	string result;
 	boost::filesystem::load_string_file("dsvlog",result);
-	cout << result.size() << endl;
 
 	vector<string> linev;
 	boost::algorithm::split(linev, result, boost::is_any_of("\n"));
-	cout << linev[1] << endl;
 
-	for(string n : linev) {
-		cout << n << endl;
+	vector<string>::iterator lit=linev.begin()+1;
+	while(lit!=linev.end()){
+		if(lit->length()>0){
+			vector<string> field;
+			boost::algorithm::split(field,*lit,boost::is_any_of(","));
+			if(field[2].find("Address write")!=string::npos){
+				vector<string> value;
+				boost::algorithm::split(value,field[2],boost::is_any_of(" "));
+				cout << value[2] << endl;
+			}
+		}
+		lit++;
 	}
-
-	vector<string>::iterator vit;
-	vit=linev.begin();
-	do {
-		cout << *vit << endl;
-		vit++;
-	} while( vit != linev.end());
 
 	return 0;
 }
