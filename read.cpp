@@ -32,12 +32,14 @@ int main()
 			lit+=2;
 			cout << lit->substr(lit->length()-2) << endl;
 			data = str2ui(lit->substr(lit->length()-2));
+			regadd = data >> 1;
 			
 
 			lit+=2;
 			cout << lit->substr(lit->length()-2) << endl;
 			regvalue = str2ui(lit->substr(lit->length()-2));
-			cout <<  hex << data << ":" << hex << regvalue << endl;
+			regvalue |= (data & 0x01) << 8;
+			cout <<  hex << regadd << ":" << hex << regvalue << endl;
 
 		}
 		lit++;
