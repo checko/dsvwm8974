@@ -20,5 +20,12 @@ int main()
 		cout << n << endl;
 	}
 
+	vector<string>::iterator vit;
+	vit=linev.begin();
+	do {
+		cout << *vit << endl;
+		vit++;
+	} while( vit != linev.end());
+
 	return 0;
 }
