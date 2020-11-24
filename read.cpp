@@ -24,26 +24,33 @@ int main()
 	boost::algorithm::split(linev, result, boost::is_any_of("\n"));
 
 	vector<string>::iterator lit=linev.begin()+1;
-	map<int,int> regs;
+	map<unsigned int,unsigned int> regs;
+	map<unsigned int,unsigned int>::iterator iter;
 	while(lit!=linev.end()){
 		unsigned int regadd,regvalue;
 		unsigned int data;
 		if(lit->find("Address write: 1A")!=string::npos){
 			lit+=2;
-			cout << lit->substr(lit->length()-2) << endl;
 			data = str2ui(lit->substr(lit->length()-2));
 			regadd = data >> 1;
 			
 
 			lit+=2;
-			cout << lit->substr(lit->length()-2) << endl;
 			regvalue = str2ui(lit->substr(lit->length()-2));
 			regvalue |= (data & 0x01) << 8;
-			cout <<  hex << regadd << ":" << hex << regvalue << endl;
+
+			iter=regs.find(regadd);
+			if(iter != regs.end())
+				iter->second = regvalue;
+			else
+				regs[regadd] = regvalue;
 
 		}
 		lit++;
 	}
+
+	for(iter=regs.begin();iter!=regs.end();iter++)
+		cout << hex << iter->first << ":" << hex << iter->second << endl;	
 
 	return 0;
 }
