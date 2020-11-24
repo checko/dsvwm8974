@@ -4,18 +4,20 @@
 #include <boost/filesystem/string_file.hpp>
 #include <boost/algorithm/string.hpp>
 
+using namespace std;
+
 int main()
 {
-	std::string result;
+	string result;
 	boost::filesystem::load_string_file("dsvlog",result);
-	std::cout << result.size() << std::endl;
+	cout << result.size() << endl;
 
-	std::vector<std::string> linev;
+	vector<string> linev;
 	boost::algorithm::split(linev, result, boost::is_any_of("\n"));
-	std::cout << linev[1] << std::endl;
+	cout << linev[1] << endl;
 
-	for(std::string n : linev) {
-		std::cout << n <<std:: endl;
+	for(string n : linev) {
+		cout << n << endl;
 	}
 
 	return 0;
