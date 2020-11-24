@@ -8,13 +8,6 @@
 
 using namespace std;
 
-unsigned int str2ui(string strin)
-{
-	unsigned int ul = stoul(strin,nullptr,16);
-
-	return ul;
-}
-
 int main()
 {
 	string result;
@@ -23,20 +16,22 @@ int main()
 	vector<string> linev;
 	boost::algorithm::split(linev, result, boost::is_any_of("\n"));
 
-	vector<string>::iterator lit=linev.begin()+1;
 	map<unsigned int,unsigned int> regs;
 	map<unsigned int,unsigned int>::iterator iter;
+
+	vector<string>::iterator lit=linev.begin()+1;
 	while(lit!=linev.end()){
 		unsigned int regadd,regvalue;
 		unsigned int data;
+
 		if(lit->find("Address write: 1A")!=string::npos){
 			lit+=2;
-			data = str2ui(lit->substr(lit->length()-2));
+			data = stoul(lit->substr(lit->length()-2),nullptr,16);
 			regadd = data >> 1;
 			
 
 			lit+=2;
-			regvalue = str2ui(lit->substr(lit->length()-2));
+			regvalue = stoul(lit->substr(lit->length()-2),nullptr,16);
 			regvalue |= (data & 0x01) << 8;
 
 			iter=regs.find(regadd);
