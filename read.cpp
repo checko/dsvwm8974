@@ -16,14 +16,11 @@ int main()
 
 	vector<string>::iterator lit=linev.begin()+1;
 	while(lit!=linev.end()){
-		if(lit->length()>0){
-			vector<string> field;
-			boost::algorithm::split(field,*lit,boost::is_any_of(","));
-			if(field[2].find("Address write")!=string::npos){
-				vector<string> value;
-				boost::algorithm::split(value,field[2],boost::is_any_of(" "));
-				cout << value[2] << endl;
-			}
+		if(lit->find("Address write: 1A")!=string::npos){
+			lit+=2;
+			cout << lit->substr(lit->length()-2) << endl;
+			lit+=2;
+			cout << lit->substr(lit->length()-2) << endl;
 		}
 		lit++;
 	}
